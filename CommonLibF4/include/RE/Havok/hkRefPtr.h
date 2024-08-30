@@ -20,7 +20,13 @@ namespace RE
 			TryDetach();
 		}
 
-		void operator=(hkRefPtr<T>&) = delete;
+		void operator=(hkRefPtr<T>& a_other)
+		{
+			TryDetach();
+			_ptr = a_other._ptr;
+			TryAttach();
+		}
+
 		void operator=(const hkRefPtr<T>& a_other)
 		{
 			TryDetach();
@@ -35,6 +41,16 @@ namespace RE
 			a_other._ptr = nullptr;
 		}
 		void operator=(const hkRefPtr<T>&&) = delete;
+
+		void operator=(std::nullptr_t)
+		{
+			reset();
+		}
+
+		void reset()
+		{
+			_ptr = nullptr;
+		}
 
 		T* get() const
 		{
