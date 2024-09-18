@@ -618,6 +618,13 @@ namespace RE::Scaleform::GFx
 				return func(this, a_data, a_info);
 			}
 
+			bool SetDisplayInfo(void* a_data, DisplayInfo* a_info) const
+			{
+				using func_t = decltype(&ObjectInterface::SetDisplayInfo);
+				static REL::Relocation<func_t> func{ REL::ID(146578) };
+				return func(this, a_data, a_info);
+			}
+
 			// members
 			MovieImpl* movieRoot;  // 08
 		};
@@ -975,6 +982,18 @@ namespace RE::Scaleform::GFx
 		{
 			assert(IsDisplayObject());
 			return _objectInterface->GetDisplayInfo(_value.data, a_info);
+		}
+
+		bool SetDisplayInfo(DisplayInfo* a_info)
+		{
+			assert(IsDisplayObject());
+			return _objectInterface->SetDisplayInfo(_value.data, a_info);
+		}
+
+		bool EqualsManagedValue(const Value& a_rhs) const
+		{
+			assert(IsManagedValue() && a_rhs.IsManagedValue());
+			return _value.data == a_rhs._value.data;
 		}
 
 		[[nodiscard]] Movie* GetMovie() const
